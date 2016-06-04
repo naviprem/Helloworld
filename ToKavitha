@@ -1,0 +1,212 @@
+--------------------------------------------------------------------------
+
+-- create statements
+
+DROP TABLE asters.address;
+CREATE TABLE asters.address
+(
+   id          int,
+   stateabbr   varchar(5)
+);
+
+DROP TABLE asters.student;
+CREATE TABLE asters.student
+(
+   id          int,
+   name        varchar(20),
+   addressid   int
+);
+
+DROP TABLE asters.grade;
+CREATE TABLE asters.grade
+(
+   studentid        int,
+   grade            varchar(5),
+   noofdaysabsent   int
+);
+
+--------------------------------------------------------------------------
+
+-- Address table insert statements
+
+INSERT INTO asters.address
+     VALUES (1, 'NJ');
+
+INSERT INTO asters.address
+     VALUES (2, 'NJ');
+
+INSERT INTO asters.address
+     VALUES (3, 'CA');
+
+INSERT INTO asters.address
+     VALUES (4, 'CA');
+
+INSERT INTO asters.address
+     VALUES (5, 'IN');
+
+INSERT INTO asters.address
+     VALUES (6, 'IN');
+
+INSERT INTO asters.address
+     VALUES (7, 'NY');
+
+INSERT INTO asters.address
+     VALUES (8, 'NY');
+	 
+INSERT INTO asters.address
+     VALUES (9, 'NC');
+
+--------------------------------------------------------------------------
+
+-- Student table insert statements
+
+INSERT INTO asters.student
+     VALUES (1, 'Sam', 1);
+
+INSERT INTO asters.student
+     VALUES (2, 'Gia', 1);
+
+INSERT INTO asters.student
+     VALUES (3, 'Mike', 2);
+
+INSERT INTO asters.student
+     VALUES (4, 'Matt', 2);
+
+INSERT INTO asters.student
+     VALUES (5, 'Josh', 3);
+
+INSERT INTO asters.student
+     VALUES (6, 'John', 3);
+
+INSERT INTO asters.student
+     VALUES (7, 'Jack', 4);
+
+INSERT INTO asters.student
+     VALUES (8, 'Tom', 4);
+
+INSERT INTO asters.student
+     VALUES (9, 'Diya', 5);
+
+INSERT INTO asters.student
+     VALUES (10, 'Simi', 5);
+
+INSERT INTO asters.student
+     VALUES (11, 'Nivi', 6);
+
+INSERT INTO asters.student
+     VALUES (12, 'Miles', 6);
+
+INSERT INTO asters.student
+     VALUES (13, 'Bay', 7);
+
+INSERT INTO asters.student
+     VALUES (14, 'Ree', 7);
+
+INSERT INTO asters.student
+     VALUES (15, 'July', 8);
+
+INSERT INTO asters.student
+     VALUES (16, 'Lily', 8);
+	 
+INSERT INTO asters.student
+     VALUES (17, 'Ryan', 9);
+
+INSERT INTO asters.student
+     VALUES (18, 'Mia', 9);
+
+--------------------------------------------------------------------------
+
+-- Grade table insert statements
+
+INSERT INTO asters.grade
+     VALUES (1, 'K', 2);
+
+INSERT INTO asters.grade
+     VALUES (2, 'K', 2);
+
+INSERT INTO asters.grade
+     VALUES (3, '1', 2);
+
+INSERT INTO asters.grade
+     VALUES (4, '1', 2);
+
+INSERT INTO asters.grade
+     VALUES (5, '2', 2);
+
+INSERT INTO asters.grade
+     VALUES (6, '2', 2);
+
+INSERT INTO asters.grade
+     VALUES (7, '3', 2);
+
+INSERT INTO asters.grade
+     VALUES (8, '3', 2);
+
+INSERT INTO asters.grade
+     VALUES (9, '4', 2);
+
+INSERT INTO asters.grade
+     VALUES (10, '4', 2);
+
+INSERT INTO asters.grade
+     VALUES (11, '5', 2);
+
+INSERT INTO asters.grade
+     VALUES (12, '5', 2);
+
+INSERT INTO asters.grade
+     VALUES (13, '6', 2);
+
+INSERT INTO asters.grade
+     VALUES (14, '6', 2);
+
+INSERT INTO asters.grade
+     VALUES (15, '7', 2);
+
+INSERT INTO asters.grade
+     VALUES (16, '7', 2);
+	 
+INSERT INTO asters.grade
+     VALUES (17, '8', 2);
+
+INSERT INTO asters.grade
+     VALUES (18, '8', 2);
+
+--------------------------------------------------------------------------
+
+-- Plain select statement
+
+SELECT a.stateabbr, g.grade, g.noofdaysabsent
+  FROM asters.student s, asters.address a, asters.grade g
+ WHERE s.id = g.studentid AND s.addressid = a.id;
+
+--------------------------------------------------------------------------
+
+-- Select statement with group by clause
+
+  SELECT a.stateabbr, g.grade, sum(g.noofdaysabsent) noofdaysabsent
+    FROM asters.student s, asters.address a, asters.grade g
+   WHERE s.id = g.studentid AND s.addressid = a.id
+GROUP BY a.stateabbr, g.grade;
+
+--------------------------------------------------------------------------
+
+-- Pivoted select statement
+
+SELECT a.stateabbr, 
+sum(CASE WHEN g.grade = 'K' THEN g.noofdaysabsent END) K,
+sum(CASE WHEN g.grade = '1' THEN g.noofdaysabsent END) first,
+sum(CASE WHEN g.grade = '2' THEN g.noofdaysabsent END) second,
+sum(CASE WHEN g.grade = '3' THEN g.noofdaysabsent END) third,
+sum(CASE WHEN g.grade = '4' THEN g.noofdaysabsent END) fourth,
+sum(CASE WHEN g.grade = '5' THEN g.noofdaysabsent END) fifth,
+sum(CASE WHEN g.grade = '6' THEN g.noofdaysabsent END) sixth,
+sum(CASE WHEN g.grade = '7' THEN g.noofdaysabsent END) seventh,
+sum(CASE WHEN g.grade = '8' THEN g.noofdaysabsent END) eigth
+  FROM asters.student s, asters.address a, asters.grade g
+ WHERE s.id = g.studentid AND s.addressid = a.id
+ group by a.stateabbr;
+ 
+
+ 
+
