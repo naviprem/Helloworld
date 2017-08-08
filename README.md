@@ -1,6 +1,6 @@
 Helloworld
 ==========
 
-This is my first GitHub repository
+SQL queries/gist collection
 
 Editing README
